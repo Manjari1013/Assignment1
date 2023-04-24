@@ -1,0 +1,12 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+import seaborn as sns
+import math
+df=pd.read_csv('house rice india csv.zip')
+df
+x=df['Lattitude']
+y=df['Longitude']
+data=df['Price']
+sns.pairplot(df)
