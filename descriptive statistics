@@ -1,0 +1,57 @@
+# import the 
+import pandas as pd
+from matplotlib import cm
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import matplotlib.path as path
+import matplotlib.ticker as ticker
+import matplotlib.animation as animation
+import pandas as pd
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+df=pd.read_csv('house rice india csv.zip')
+df
+x=df['Lattitude']
+y=df['Longitude']
+data=df['Price']
+# Get numerical and categorical columns
+total_columns = df.columns
+num_col = df._get_numeric_data().columns
+cat_col = list(set(total_columns)-set(num_col))
+# find categorical columns category and their counts
+for i in cat_col:
+    print(i)
+    print(df[i].value_counts())
+    # Plot graph for Item_Type category
+index = np.arange(6)
+fig, ax = plt.subplots(figsize=(15, 8))
+list1x = list(dict(df['Price'].value_counts()).keys())
+list1y = list(df['Price'].value_counts())
+ax.barh(list1x, list1y, alpha=0.7,
+         # width = 0.5,
+        color=cm.Blues([i / 0.00525 for i in [ 0.00208, 0.00235, 0.00281, 0.00317, 0.00362, 0.00371, 0.00525, 0.00679, 0.00761, 0.00833]])
+        )
+plt.rcParams.update({'font.size': 10})
+rects = ax.patches
+for i, label in enumerate(list1y):
+    ax.text(label , i, str(label), size=10, ha='left', va='center')
+
+ax.text(0, 1.02, 'Item_Type house rice india Count', transform=ax.transAxes, size=12, weight=600, color='#777777')
+ax.xaxis.set_ticks_position('bottom')
+ax.tick_params(axis='x', colors='black', labelsize=9)
+ax.set_axisbelow(True)
+ax.text(0, -0.1, 'Source: https://content/house rice india csv.zip',
+        transform=ax.transAxes, size=12, weight=600, color='#777777')
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+plt.show()
+print(df[['Lattitude','Longitude']].groupby(['Lattitude']).agg({'Longitude':'mean'}))
+print(df[['Lattitude','Longitude']].groupby(['Lattitude']).agg({'Longitude':'median'}))
+print(df[['Lattitude','Longitude']].groupby(['Longitude']).agg(lambda x:x.value_counts().index[0]))
+for i in num_col:
+    print(f"Column: {i} Max_Value: {max(df[i])} Min_Value: {min(df[i])} Range: {round(max(df[i]) - min(df[i]),2)}")
+    for i in num_col:
+    print(i , round(df[i].std(),2))
+    for i in num_col:
+    print(i , round(df[i].var(),2))
+    df.skew()
