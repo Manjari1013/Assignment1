@@ -1,0 +1,37 @@
+#Find the total number of missing values from the entire dataset
+df.isnull().sum().sum() 
+df = df.dropna(axis=0)
+df.isnull().sum()
+df = df.drop(['Price'],axis=1)
+df.isnull().sum()
+import pandas as pd
+import numpy as np
+test = pd.Series(range(6))
+test.loc[2:4] = np.nan
+test
+# Forward-Fill
+test.fillna(method='ffill')
+# Backward-Fill
+test.fillna(method='bfill')
+test.interpolate()
+import pandas as pd
+import numpy as np
+X = pd.DataFrame({'Shape':['square', 'square', 'oval', 'circle', np.nan]})
+from sklearn.impute import SimpleImputer
+imputer = SimpleImputer(strategy='most_frequent')
+imputer.fit_transform(X)
+imputer = SimpleImputer(strategy='constant', fill_value='missing')
+imputer.fit_transform(X)
+import numpy as np
+from sklearn.impute import SimpleImputer
+imp = SimpleImputer(missing_values=np.nan, strategy='mean')
+imp.fit([[1, 2], [np.nan, 3], [7, 6]])
+X = [[np.nan, 2], [6, np.nan], [7, 6]]
+print(imp.transform(X))
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
+impute_it = IterativeImputer()
+impute_it.fit_transform(X)
+from sklearn.impute import KNNImputer
+impute_knn = KNNImputer(n_neighbors=2)
+impute_knn.fit_transform(X)
